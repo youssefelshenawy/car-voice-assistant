@@ -30,20 +30,16 @@ def speak_text(text):
 
 
 def listen_and_convert_to_text(speaker):
-    # Initialize recognizer class (for recognizing the speech)
     recognizer = sr.Recognizer()
 
-    # Set the microphone as the source of the audio
     with sr.Microphone() as source:
         print(f"{speaker}, please speak now...")
         speak_text(f"{speaker},please speak now")
 
-        # Adjust for ambient noise and listen for audio input
         recognizer.adjust_for_ambient_noise(source)
         audio = recognizer.listen(source)
 
         try:
-            # Use Google Web Speech API to recognize speech
             text = recognizer.recognize_google(audio)
             print(f"{speaker} said: {text}")
             speak_text(f"{speaker} said: {text}")
@@ -74,7 +70,7 @@ def chat_with_assistant():
 
     while True:
         for i, speaker in enumerate(speakers):
-            while inputs[i] is None:  # Keep prompting the same speaker until valid input
+            while inputs[i] is None: 
                 inputs[i] = listen_and_convert_to_text(speaker)
                 if inputs[i] and inputs[i].lower() == "exit":
                     print("Conversation ended.")
